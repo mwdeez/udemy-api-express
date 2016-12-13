@@ -52,50 +52,36 @@ router.route('/vehicles')
     vehicle.color = req.body.color;
 
     vehicle.save(function(err) {
-      if (err) {
-        // send error if we have one
-        res.send(err);
-      }
-      res.json({message: 'Vehicle was successfully manufactures'});
+      success = {message: 'Vehicle was successfully manufactured!'};
+      err ? res.send(err) : res.json(success)
     });
   })
+  
   .get(function(req, res) {
     // find the requested vehicle
     Vehicle.find(function(err, vehicles) {
-      if (err) {
-        res.send(err);
-      }
-      res.json(vehicles);
+      err ? res.send(err) : res.json(vehicles)
     });
   });
 
 router.route('/vehicle/:vehicle_id')
   .get(function(req, res) {
     Vehicle.findById(req.params.vehicle_id, function(err, vehicle) {
-      if (err) {
-        res.send(err);
-      }
-      res.json(vehicle);
+      err ? res.send(err) : res.json(vehicle)
     });
   });
 
 router.route('/vehicle/make/:make')
   .get(function(req, res) {
     Vehicle.find({make: req.params.make}, function(err, vehicle) {
-      if (err) {
-        res.send(err);
-      }
-      res.json(vehicle);
+      err ? res.send(err) : res.json(vehicle)
     });
   });
 
 router.route('/vehicle/color/:color')
   .get(function(req, res) {
     Vehicle.find({color: req.params.color}, function(err, vehicle) {
-      if (err) {
-        res.send(err);
-      }
-      res.json(vehicle);
+      err ? res.send(err) : res.json(vehicle)
     });
   });
 
