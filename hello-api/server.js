@@ -33,7 +33,9 @@ app.use('/api', router);
 // middleware: all requests
 router.use(function(req, res, next) {
   console.log('Hitting that middleware...')
-
+  if (req.body.make === 'Hyundai') {
+    console.log('A WILD HYUNDAI!');
+  }
   next();
 });
 
@@ -56,7 +58,7 @@ router.route('/vehicles')
       err ? res.send(err) : res.json(success)
     });
   })
-  
+
   .get(function(req, res) {
     // find the requested vehicle
     Vehicle.find(function(err, vehicles) {
@@ -87,6 +89,4 @@ router.route('/vehicle/color/:color')
 
 // start the engine
 app.listen(port);
-
-// log to console
 console.log('Server listening on port: ' + port);
