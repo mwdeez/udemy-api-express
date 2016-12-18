@@ -7,9 +7,13 @@ import config from './config';
 import routes from './routes';
 
 let app = express();
-app.server = http:createServer(app);
+app.server = http.createServer(app);
 
 // middleware
+// parse application/json
+app.use(bodyParser.json({
+  limit: config.bodyLimit
+}));
 
 // passport config
 
@@ -19,6 +23,6 @@ app.use('/v1', routes);
 
 // run server
 app.server.listen(config.port);
-console.log(`Started server on port ${app.server.addres().port}`);
+console.log(`Started server on port ${app.server.address().port}`);
 
 export default app;
