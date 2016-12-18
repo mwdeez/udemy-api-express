@@ -31,19 +31,17 @@ app.use('/api', router);
 // good for validations, logging, injecting in the middle
 // of a request, failure handling
 // middleware: all requests
-router.use(function(req, res, next) {
+router.use((req, res, next) => {
   console.log('Hitting that middleware...')
 
   next();
 });
 
 //  test route
-router.get('/', function(req, res) {
-  res.json({message: 'Welcome aboard!'});
-});
+router.get('/', (req, res) => res.json({ message: "Welcome aboard!" }));
 
 router.route('/vehicles')
-  .post(function(req, res) {
+  .post((req, res) => {
     var vehicle = new Vehicle();  // instantiate our new class
 
     // assignments
@@ -51,7 +49,7 @@ router.route('/vehicles')
     vehicle.model = req.body.model;
     vehicle.color = req.body.color;
 
-    vehicle.save(function(err) {
+    vehicle.save(err => {
       if (err) {
         // send error if we have one
         res.send(err);
@@ -59,9 +57,9 @@ router.route('/vehicles')
       res.json({message: 'Vehicle was successfully manufactures'});
     });
   })
-  .get(function(req, res) {
-    // find the requested vehicle
-    Vehicle.find(function(err, vehicles) {
+  .get((req, res) => {
+    // find all vehicles
+    Vehicle.find((err, vehicles) => {
       if (err) {
         res.send(err);
       }
@@ -70,8 +68,8 @@ router.route('/vehicles')
   });
 
 router.route('/vehicle/:vehicle_id')
-  .get(function(req, res) {
-    Vehicle.findById(req.params.vehicle_id, function(err, vehicle) {
+  .get((req, res) => {
+    Vehicle.findById(req.params.vehicle_id, (err, vehicle) => {
       if (err) {
         res.send(err);
       }
@@ -80,8 +78,8 @@ router.route('/vehicle/:vehicle_id')
   });
 
 router.route('/vehicle/make/:make')
-  .get(function(req, res) {
-    Vehicle.find({make: req.params.make}, function(err, vehicle) {
+  .get((req, res) => {
+    Vehicle.find({make: req.params.make}, (err, vehicle) => {
       if (err) {
         res.send(err);
       }
@@ -89,9 +87,38 @@ router.route('/vehicle/make/:make')
     });
   });
 
+// returns the first vehicle that contains a substr of the model param
+router.route('/vehicle/model/:model')
+  .get((req, res) => {
+    Vehicle.find({}, (err, vehicles) => {
+      if (err) {
+        res.send(err);
+      }
+
+      // find the vehicle
+      // ignoring case
+      let matchedVehicle = '';
+
+      for (vehicle of vehicles) {
+        if (vehicle.model.toLowerCase().includes(req.params.model.toLowerCase())) {
+          matchedVehicle = vehicle;
+          break;
+        }
+      }
+
+      if (matchedVehicle) {
+        res.json(matchedVehicle)
+      } else {
+        res.send({message: "no vehicle found"})
+      }
+
+
+    });
+  });
+
 router.route('/vehicle/color/:color')
-  .get(function(req, res) {
-    Vehicle.find({color: req.params.color}, function(err, vehicle) {
+  .get((req, res) => {
+    Vehicle.find({color: req.params.color}, (err, vehicle) => {
       if (err) {
         res.send(err);
       }
