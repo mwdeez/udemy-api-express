@@ -1,30 +1,30 @@
 // dependencies
-var express = require('express');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
+var express = require('express')
+var bodyParser = require('body-parser')
+var mongoose = require('mongoose')
 
 // models
-var Vehicle = require('./app/models/vehicle.js');
+var Vehicle = require('./app/models/vehicle.js')
 
 // instantiate the app
-var app = express();
+var app = express()
 
 // configure for bodyParser
 // (allows data from POST body)
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json())
 
 // define server
-var port = process.env.PORT || 4000;
+var port = process.env.PORT || 4000
 
 // connect to mongo
-mongoose.connect('mongodb://localhost:27017/codealong');
+mongoose.connect('mongodb://localhost:27017/codealong')
 
 // API routes
-var router = express.Router();
+var router = express.Router()
 
 // prefix all routes with /api
-app.use('/api', router);
+app.use('/api', router)
 
 
 // MIDDLEWARE!
