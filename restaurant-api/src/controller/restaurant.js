@@ -6,7 +6,7 @@ export default({ config, db }) => {
   let api = Router();
 
   // '/v1/restaurant/add'
-  api.post('/add', (res, req) => {
+  api.post('/add', (req, res) => {
     let newRest = new Restaurant();
     newRest.name = req.body.name;
 
