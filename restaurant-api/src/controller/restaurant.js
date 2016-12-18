@@ -6,5 +6,17 @@ export default({ config, db }) => {
   let api = Router();
 
   // '/v1/restaurant/add'
-  
+  api.post('/add', (res, req) => {
+    let newRest = new Restaurant();
+    newRest.name = req.body.name;
+
+    newRest.save(err => {
+      if (err) {
+        res.send(err);
+      }
+      res.json({ message: 'Restaurant saved successfully' });
+    });
+  });
+
+  return api;
 }
