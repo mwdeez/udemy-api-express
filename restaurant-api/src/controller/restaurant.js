@@ -29,6 +29,17 @@ export default({ config, db }) => {
       res.json(restaurants)
     })
   })
+
+  // READ
+  // v1/restaurant/:id - details
+  api.get('/:id', (req, res) => {
+    Restaurant.find({_id: req.params.id}, (err, restaurant) => {
+      if (err) {
+        res.send(err)
+      }
+      res.json(restaurant)
+    })
+  })
   // UPDATE
 
   // DELETE
