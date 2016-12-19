@@ -41,7 +41,7 @@ router.get('/', (req, res) => res.json({ message: 'Welcome aboard!' }))
 
 router.route('/vehicles')
   .post((req, res) => {
-    let vehicle = new Vehicle()  // instantiate our new class
+    var vehicle = new Vehicle()  // instantiate our new class
 
     // assignments
     vehicle.make = req.body.make
