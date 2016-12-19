@@ -60,6 +60,18 @@ export default({ config, db }) => {
   })
 
   // DELETE
+  // /v1/restauarant/:id - delete
+  api.delete('/:id', (req, res) => {
+    Restaurant.remove({
+      _id: req.params.id
+    }, (err, restaurant) => {
+      if (err) {
+        res.send(err)
+      }
+      res.json({ message: `Successfully deleted record ${req.params.id}`})
+    })
+
+  })
 
   return api
 }
