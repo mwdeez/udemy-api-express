@@ -31,16 +31,33 @@ export default({ config, db }) => {
   })
 
   // READ
-  // v1/restaurant/:id - details
+  // /v1/restaurant/:id - details
   api.get('/:id', (req, res) => {
-    Restaurant.find({_id: req.params.id}, (err, restaurant) => {
+    Restaurant.findById(req.params.id, (err, restaurant) => {
       if (err) {
         res.send(err)
       }
       res.json(restaurant)
     })
   })
+
   // UPDATE
+  // /v1/restaurant/:id - update
+  api.put('/:id', (req, res) => {
+    Restaurant.findById(req.params.id, (err, restaurant) => {
+      if (err) {
+        res.send(err)
+      }
+      // update restaurant
+      restaurant.name = req.body.name
+      restaurant.save(err => {
+        if (err) {
+          res.send(err)
+        }
+        res.json({ message: `successfully updated record ${req.params.id}` })
+      })
+    })
+  })
 
   // DELETE
 
