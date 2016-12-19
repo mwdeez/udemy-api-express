@@ -1,56 +1,56 @@
 import mongoose from 'mongoose'
 import { Router } from 'express'
-import Restaurant from '../model/restaurant'
+import Foodtruck from '../model/foodtruck'
 
 export default({ config, db }) => {
   let api = Router()
 
   // CREATE
-  // '/v1/restaurant/add'
+  // '/v1/foodtruck/add'
   api.post('/add', (req, res) => {
-    let newRest = new Restaurant()
-    newRest.name = req.body.name
+    let newTruck = new Foodtruck()
+    newTruck.name = req.body.name
 
-    newRest.save(err => {
+    newTruck.save(err => {
       if (err) {
         res.send(err)
       }
-      res.json({ message: `Restaurant saved successfully: ${req.body.name}` })
+      res.json({ message: `Foodtruck saved successfully: ${req.body.name}` })
     })
   })
 
   // READ
-  // /v1/restaurant/ - list all
+  // /v1/foodtruck/ - list all
   api.get('/', (req, res) => {
-    Restaurant.find({}, (err, restaurants) => {
+    Foodtruck.find({}, (err, trucks) => {
       if (err) {
         res.send(err)
       }
-      res.json(restaurants)
+      res.json(trucks)
     })
   })
 
   // READ
-  // /v1/restaurant/:id - details
+  // /v1/foodtruck/:id - details
   api.get('/:id', (req, res) => {
-    Restaurant.findById(req.params.id, (err, restaurant) => {
+    Foodtruck.findById(req.params.id, (err, truck) => {
       if (err) {
         res.send(err)
       }
-      res.json(restaurant)
+      res.json(truck)
     })
   })
 
   // UPDATE
-  // /v1/restaurant/:id - update
+  // /v1/foodtruck/:id - update
   api.put('/:id', (req, res) => {
-    Restaurant.findById(req.params.id, (err, restaurant) => {
+    Foodtruck.findById(req.params.id, (err, truck) => {
       if (err) {
         res.send(err)
       }
       // update restaurant
-      restaurant.name = req.body.name
-      restaurant.save(err => {
+      truck.name = req.body.name
+      truck.save(err => {
         if (err) {
           res.send(err)
         }
@@ -60,15 +60,15 @@ export default({ config, db }) => {
   })
 
   // DELETE
-  // /v1/restauarant/:id - delete
+  // /v1/foodtruck/:id - delete
   api.delete('/:id', (req, res) => {
-    Restaurant.remove({
+    Foodtruck.remove({
       _id: req.params.id
-    }, (err, restaurant) => {
+    }, (err, truck) => {
       if (err) {
         res.send(err)
       }
-      res.json({ message: `Successfully deleted record ${req.params.id}`})
+      res.json({ message: `Successfully deleted record ${req.params.id}` })
     })
 
   })
